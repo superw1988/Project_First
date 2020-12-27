@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
 </head>
 <body>
-	<h2>게시판 목록111</h2>
+	<h2>게시판 목록222</h2>
 	<table class="board_list">
 		<colgroup>
 			<col width="10%" />
