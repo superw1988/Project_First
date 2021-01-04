@@ -1,74 +1,72 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<%@ include file="/WEB-INF/include/include-header.jsp"%>
 </head>
 <body>
-	<table class="board_view">
-		<colgroup>
-			<col width="15%" />
-			<col width="35%" />
-			<col width="15%" />
-			<col width="35%" />
-		</colgroup>
-		<caption>게시글 상세</caption>
-		<tbody>
-			<tr>
-				<th scope="row">글 번호</th>
-				<td>${map.IDX }</td>
-				<th scope="row">조회수</th>
-				<td>${map.HIT_CNT }</td>
-			</tr>
-			<tr>
-				<th scope="row">작성자</th>
-				<td>${map.CREA_ID }</td>
-				<th scope="row">작성시간</th>
-				<td>${map.CREA_DTM }</td>
-			</tr>
-			<tr>
-				<th scope="row">제목</th>
-				<td colspan="3">${map.TITLE }</td>
-			</tr>
-			<tr>
-				<td colspan="4">${map.CONTENTS }</td>
-			</tr>
-		</tbody>
-	</table>
+	<form id="frm">
+		<table class="board_view">
+			<colgroup>
+				<col width="15%" />
+				<col width="35%" />
+				<col width="15%" />
+				<col width="35%" />
+			</colgroup>
+			<caption>게시글 상세</caption>
+			<tbody>
+				<tr>
+					<th scope="row">아이디</th>
+					<td><input type="text" name="user_id" id="user_id" value="${map.user_id }" readonly="readonly"/></td>
+					<th scope="row">이름</th>
+					<td><input type="text" name="user_nm" id="user_nm" value="${map.user_nm }" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 	<a href="#this" class="btn" id="list">목록으로</a>
 	<a href="#this" class="btn" id="update">수정하기</a>
-	<%@ include file="/WEB-INF/include/include-body.jspf"%>
+	<a href="#this" class="btn" id="delete">삭제하기</a>
+	<%@ include file="/WEB-INF/include/include-body.jsp"%>
 	<script type="text/javascript"> 
 	
-	$(document).ready(function(){ 
-		$("#list").on("click", function(e){ //목록으로 버튼 
-			e.preventDefault(); 
-			fn_openBoardList(); 
+		$(document).ready(function() {
+		    $("#list").on("click", function(e) { //목록으로 버튼 
+		        e.preventDefault();
+		        fn_openBoardList();
+		    });
+		    $("#update").on("click", function(e) {
+		        e.preventDefault();
+		        fn_updateBoard();
+		    });
+		    $("#delete").on("click", function(e) {
+		        e.preventDefault();
+		        fn_deleteBoard();
+		    });
+		});
+	
+		function fn_openBoardList() {
+		    var comSubmit = new ComSubmit();
+		    comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />");
+		    comSubmit.submit();
+		}
+		
+		function fn_updateBoard(){
+			var comSubmit = new ComSubmit("frm");
+			console.log(comSubmit);
+			comSubmit.setUrl("<c:url value='/sample/updateBoard.do' />");
+			comSubmit.submit();
+		}
+		
+		function fn_deleteBoard(){
+			var comSubmit = new ComSubmit("frm");
+			comSubmit.setUrl("<c:url value='/sample/deleteBoard.do' />");
+			comSubmit.submit();
 			
-		}); 
-		
-		$("#update").on("click", function(e){ 
-			e.preventDefault(); 
-			fn_openBoardUpdate(); 
-			
-		}); 
-		
-	}); 
-	
-	function fn_openBoardList(){ 
-		
-		var comSubmit = new ComSubmit(); 
-		comSubmit.setUrl("<c:url value='/sample/openBoardList.do' />"); 
-		comSubmit.submit(); } 
-	
-	function fn_openBoardUpdate(){ 
-		
-		var idx = "${map.IDX}"; 
-		var comSubmit = new ComSubmit(); 
-		comSubmit.setUrl("<c:url value='/sample/openBoardUpdate.do' />"); 
-		comSubmit.addParam("IDX", idx); 
-		comSubmit.submit(); } 
-	
+		}
+
 	</script>
 </body>
 </html>
+
